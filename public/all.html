@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+    integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+    crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+    integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+    crossorigin=""></script>
+    <style>
+        /* #checkinMap { height: 180px;
+        margin:8px 0px; } */
+    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div><a href="/index.html">enter</a> | <a href="/all.html">list</a></div>
+    <div id="checkinMap"></div>
+    <script src="logs.js"></script>
+</body>
+</html>
+
+
+<!-- <!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Data Selfie App</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="">
+    </head>
+    <body>
+       
+        <h1>hi</h1>
+         <div><a href="/index.html">enter</a> | <a href="/all.html">list</a></div>
+        <script >
+        getdata();
+        async function getdata(){
+            const response = await fetch('/api');
+            const data=await response.json();
+            for(item of data){
+                const root=document.createElement('div');
+                
+                const geo=document.createElement('div');
+                const date=document.createElement('div');
+                
+               
+                
+                
+                geo.textContent=`${item.lat},${item.lon}`;
+                  
+                  const dateString = new Date(item.timestamp).toLocaleString();
+                date.textContent=dateString;
+                
+                 root.append(geo,date);
+                 document.body.append(root);
+
+            }
+            console.log(data);
+        }
+        //fetch('/api');
+        </script>
+    </body>
+</html> -->

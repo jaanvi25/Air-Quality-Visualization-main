@@ -1,0 +1,10 @@
+node_modules/
+.env
+database_country_forecast.db
+database_country.db
+database_forecast.db
+database_latlon_forecast.db
+database_latlon.db
+database_post_code_forecast.db
+database_post_code.db
+database.db

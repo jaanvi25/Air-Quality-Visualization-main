@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>
+    Dashboard
+  </title>
+  <link rel="stylesheet" type="text/css" href="styles.css">
+  <script src="https://kit.fontawesome.com/f0405aa146.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+    integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+    integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+    crossorigin="" />
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+    integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+    crossorigin=""></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <style>
+    #mymap {
+      position: absolute;
+      top: 80px;
+      bottom: 0;
+      left: 0;
+      right: 400px;
+    }
+  </style>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+  <script
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBBlArqoiKIjtdTSju_7x9bfcyxGvl6hFA&callback=initMap&libraries=&v=weekly"
+    defer></script>
+
+</head>
+
+<body class="hero-anime">
+
+  <div class="navigation-wrap bg-light start-header start-style">
+    <img src="logo4.png" class="logo" alt="" srcset=""></a>
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <nav class="navbar navbar-expand-md navbar-light">
+
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+              aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="navbar-nav ml-auto py-4 py-md-0">
+                <!-- <li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4 active">
+									<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Home</a>
+								</li> -->
+                <li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
+                  <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
+                    aria-expanded="false"> Current AQI</a>
+                  <div class="dropdown-menu">
+                    <a class="dropdown-item" href="./current_location.html">Current Location AQI</a>
+                    <a class="dropdown-item" href="./latlon.html">Enter Coordinates AQI</a>
+                    <a class="dropdown-item" href="./postalcode.html">Postal Code AQI</a>
+                    <a class="dropdown-item" href="./home.html">City AQI</a>
+                  </div>
+                </li>
+                <li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
+                  <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
+                    aria-expanded="false">AQI Forecast</a>
+                  <div class="dropdown-menu">
+                    <a class="dropdown-item" href="./current_location_forecast.html">Current Location AQI</a>
+                    <a class="dropdown-item" href="./latlon_forecast.html">Enter Coordinates AQI</a>
+                    <a class="dropdown-item" href="./postalcode_forecast.html">Postal Code AQI</a>
+                    <a class="dropdown-item" href="./aqiforecast.html">City AQI</a>
+                  </div>
+                </li>
+                <!-- <li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
+									<a class="nav-link" href="login.html">Login/Register</a>
+								</li> -->
+                <!-- <li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
+									<a class="nav-link" href="#section">About Us</a>
+                                </li> -->
+                <!-- <li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
+                                    <div class="section mt-5">
+                                        <div class="container">
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <div id="switch">
+                                                        <div id="circle"></div>
+                                                    </div>
+                                                </div>	
+                                            </div>		
+                                        </div>			
+                                    </div>
+                                </li> -->
+              </ul>
+            </div>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="my-5 py-5">
+  </div>
+
+
+  <div id="mymap"></div>
+
+  <div class="right">
+    <!-- <form> -->
+    <div class="form-group">
+      <label for="exampleInputEmail1">Enter Postal code</label>
+      <input type="text" class="form-control" id="postal_code" aria-describedby="emailHelp"
+        placeholder="Enter Postal code">
+
+    </div>
+    <button id="submit" type="submit" class="btn btn-primary">Submit</button>
+    <small id="emailHelp" class="form-text text-muted">AQI: Air Quality Index<span id="temperature"></span></small>
+    <small id="emailHelp" class="form-text text-muted">O3: Concentration of surface O3 (µg/m³)<span
+        id="temperatur"></span></small>
+    <small id="emailHelp" class="form-text text-muted">SO2: Concentration of surface SO2 (µg/m³)<span
+        id="temperature"></span></small>
+    <small id="emailHelp" class="form-text text-muted">NO2: Concentration of surface NO2 (µg/m³)<span
+        id="temperature"></span></small>
+    <small id="emailHelp" class="form-text text-muted">CO: Concentration of carbon monoxide (µg/m³)<span
+        id="temperature"></span></small>
+    <small id="emailHelp" class="form-text text-muted">PM25: Concentration of particulate matter <span
+        id="temperature"></span></small>
+    <small id="emailHelp" class="form-text text-muted">
+      < 2.5 microns (µg/m³)<span id="temperature"></span>
+    </small>
+    <small id="emailHelp" class="form-text text-muted">PM10: Concentration of particulate matter <span
+        id="temperature"></span></small>
+    <small id="emailHelp" class="form-text text-muted">
+      < 10 microns (µg/m³)<span id="temperature"></span>
+    </small>
+
+    <!-- <button type="submit" class="btn btn-primary">My Location</button> -->
+
+  </div>
+  <!-- </form> -->
+  <div>
+    <div class="ct-pageWrapper" id="ct-js-wrapper" style="text-align: center;">
+      <section class="company-heading intro-type" id="parallax-one">
+    </div>
+    <div class="parallax" id="parallax-cta" style="background-image:url(https://www.solodev.com/assets/hero/hero.jpg);">
+    </div>
+    </section>
+    </section>
+  </div>
+  </div>
+  </section>
+  <section class="culture-section company-sections ct-u-paddingBoth100 paddingBothHalf noTopMobilePadding">
+    <div class="row">
+      <div>
+        <div class="container" style=" margin: 0 auto;">
+          <h2>Air Quality Index</h2>
+          <p class="ct-u-size22 ct-u-fontWeight300 ct-u-marginBottom60" style="text-align: center;">An air quality index
+            is used by government agencies to communicate to the public how polluted the air currently is or how
+            polluted it is forecast to become. Public health risks increase as the AQI rises. Different countries have
+            their own air quality indices, corresponding to different national air quality standards.</p>
+          <!-- <p class="ct-u-size22 ct-u-fontWeight300 ct-u-marginBottom60" style="text-align: center;">Think of the AQI as a yardstick that runs from 0 to 500. The higher the AQI value, the greater the level of air pollution and the greater the health concern. For example, an AQI value of 50 or below represents good air quality, while an AQI value over 300 represents hazardous air quality. For each pollutant an AQI value of 100 generally corresponds to an ambient air concentration that equals the level of the short-term national ambient air quality standard for protection of public health. AQI values at or below 100 are generally thought of as satisfactory. When AQI values are above 100, air quality is unhealthy: at first for certain sensitive groups of people, then for everyone as AQI values get higher. The AQI is divided into six categories. Each category corresponds to a different level of health concern. Each category also has a specific color. The color makes it easy for people to quickly determine whether air quality is reaching unhealthy levels in their communities.</p> -->
+        </div>
+      </div>
+    </div>
+    </div>
+    <div class="row ct-u-paddingBoth20">
+      <div class="col-xs-6 col-md-4">
+        <div class="company-icons-white">
+          <i class="fa fa-thermometer-full" aria-hidden="true"></i>
+          <p>TEMPERATURE</p>
+          <p class="company-icons-subtext hidden-xs">Measuring temperature supports air quality assessment, air quality
+            modelling and forecasting activities.</p>
+        </div>
+      </div>
+      <div class="col-xs-6 col-md-4">
+        <div class="company-icons-white">
+          <i class="fa fa-sun-o" aria-hidden="true"></i>
+          <p>HUMIDITY</p>
+          <p class="company-icons-subtext hidden-xs">Water vapour plays an important role in many thermal and
+            photochemical reactions in the atmosphere.</p>
+        </div>
+      </div>
+      <div class="col-xs-6 col-md-4">
+        <div class="company-icons-white">
+          <i class="fa fa-tint" aria-hidden="true"></i>
+          <p>RAINFALL</p>
+          <p class="company-icons-subtext hidden-xs">Rain has a 'scavenging' effect when it washes particulate matter
+            out of the atmosphere and dissolves gaseous pollutants. Removing particles improves visibility. </p>
+        </div>
+      </div>
+    </div>
+    <div class="row ct-u-paddingBoth20">
+      <div class="col-xs-6 col-md-4">
+        <div class="company-icons-white">
+          <i class="fas fa-sun"></i>
+          <p>SOLAR RADIATION</p>
+          <p class="company-icons-subtext hidden-xs">It is important to monitor solar radiation for use in modelling
+            photochemical smog events, as the intensity of sunlight has an important influence on the rate of the
+            chemical reactions that produce the smog.</p>
+        </div>
+      </div>
+      <div class="col-xs-6 col-md-4">
+        <div class="company-icons-white">
+          <i class="fas fa-wind"></i>
+          <p>WIND SPEED & DIRECTION</p>
+          <p class="company-icons-subtext hidden-xs">When high pollutant concentrations occur at a monitoring station,
+            wind data records can determine the general direction and area of the emissions.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <h4 class="table-heading">AQI Basics for Ozone and and Particle Pollution</h4>
+
+  <table class="styled-table" style="margin-left: 14px;">
+    <thead>
+      <tr>
+        <th>AQI Colour</th>
+        <th>Levels of Concern</th>
+        <th>Values of Index</th>
+        <th>Description of Air Quality</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="active-row-green">
+        <td>Green</td>
+        <td>Good</td>
+        <td>0 to 50</td>
+        <td>Air Quality is satisfactory, and air pollution poses little or no risk.</td>
+      </tr>
+      <tr class="active-row-yellow">
+        <td>Yellow</td>
+        <td>Moderate</td>
+        <td>51 to 100</td>
+        <td>Air Quality is acceptable. However, there may be a risk for some people, particularly those who are
+          unusually sensitive to air pollution.</td>
+      </tr>
+      <tr class="active-row-orange">
+        <td>Orange</td>
+        <td>Unhealthy for Sensitive Groups</td>
+        <td>101 to 150</td>
+        <td>Members of sensitive groups may experience health effects. The general public is less likely to be affected.
+        </td>
+      </tr>
+      <tr class="active-row-red">
+        <td>Red</td>
+        <td>Unhealthy</td>
+        <td>151 to 200</td>
+        <td>Some members of the general public may experience health effects;members of sensitive groups may experience
+          more serious health effects.</td>
+      </tr>
+      <tr class="active-row-purple">
+        <td>Purple</td>
+        <td>Very Unhealthy</td>
+        <td>201 to 300</td>
+        <td>Health alert: The risk of healthy effects is increased for everyone.</td>
+      </tr>
+      <tr class="active-row-black">
+        <td>Black</td>
+        <td>Hazardous</td>
+        <td>301 and higher</td>
+        <td>Health warning of emergency conditions: everyone is more likely to be affected.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <script src="./postal_code.js"></script>
+  <script>
+
+// var locations=[
+// ["Mumbai", 18.9667,72.8333],
+// ["Delhi", 28.7,77.2],
+// ["Jaipur",26.9167,	75.8667]
+// ];
+//  var map = L.map('map').setView([22.805, 82.0], 5);
+//         L.tileLayer('https://api.maptiler.com/maps/streets/256/{z}/{x}/{y}.png?key=II7uREndG4cP3ocP64ZH', {
+//             attribution: '<a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a> <a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>',
+//         }).addTo(map);
+
+// for (var i = 0; i < locations.length; i++) {
+//     marker =  L.marker([locations[i][1], locations[i][2]])
+//     .bindPopup(locations[i][0])
+// 	.addTo(map);
+//var marker = L.marker([18.9667,72.8333]).addTo(map);
+  </script>
+  <script>
+
+    let postal_code, country, air, weather;
+    async function postal_code1() {
+      // lat = position.coords.latitude;
+      //   lon = position.coords.longitude;
+      postal_code = document.getElementById('postal_code').value;
+      // state=document.getElementById('state').value;
+      // country= document.getElementById('country').value;
+      // const api_url=`https://api.weatherbit.io/v2.0/current/airquality?lat=${lat}&lon=${lon}&key=c39e8bc08f7f42769ff7af360eb0cfd7`;
+      const api_url = `weather2/${postal_code}`;
+      const response = await fetch(api_url);
+      const json = await response.json();
+      console.log('sdfsd', json);
+      weather = json.weather;
+      //air = json.air_quality.results[0].measurements[0];
+      // document.getElementById('summary').textContent = json.data[0].aqi;
+      // document.getElementById('temperature').textContent = weather.data[0].aqi;
+      // document.getElementById('aq_parameter').textContent = air.parameter;
+      // document.getElementById('aq_value').textContent = air.value;
+      // document.getElementById('aq_unit').textContent = air.unit;
+      // document.getElementById('aq_date').textContent = air.lastUpdated;
+      console.log('amit');
+      const data = { weather };
+      const options = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      };
+      const db_response = await fetch('/api_postal_code', options);
+      const db_json = await db_response.json();
+      getData();
+    };
+
+    document.getElementById('submit').addEventListener('click', postal_code1);
+    // if ('geolocation' in navigator) {
+    //   // console.log('geolocation available');
+    //   navigator.geolocation.getCurrentPosition(async position => {
+    //     try{
+
+
+
+
+    //   // console.log(json);
+
+    //   console.log(json);
+    //     }catch(error){
+    //        // console.error(error);
+    //       console.log('something went wrong');
+    //       air={value:-1};
+    //       document.getElementById('aq_value').textContent='NO DATA'
+    //     }
+    //     const data = { lat, lon,weather,air };
+    //   const options = {
+    //     method: 'POST',
+    //     headers: {
+    //       'Content-Type': 'application/json'
+    //     },
+    //     body: JSON.stringify(data)
+    //   };
+    //   const db_response = await fetch('/api', options);
+    //   const db_json = await db_response.json();
+    //   console.log(db_json);
+    //   });
+    // } else {
+    //   console.log('geolocation not available');
+    // }
+
+  </script>
+  <script>
+    (function ($) {
+      "use strict";
+
+      $(function () {
+        var header = $(".start-style");
+        $(window).scroll(function () {
+          var scroll = $(window).scrollTop();
+
+          if (scroll >= 10) {
+            header.removeClass('start-style').addClass("scroll-on");
+          } else {
+            header.removeClass("scroll-on").addClass('start-style');
+          }
+        });
+      });
+
+      //Animation
+
+      $(document).ready(function () {
+        $('body.hero-anime').removeClass('hero-anime');
+      });
+
+      //Menu On Hover
+
+      $('body').on('mouseenter mouseleave', '.nav-item', function (e) {
+        if ($(window).width() > 750) {
+          var _d = $(e.target).closest('.nav-item'); _d.addClass('show');
+          setTimeout(function () {
+            _d[_d.is(':hover') ? 'addClass' : 'removeClass']('show');
+          }, 1);
+        }
+      });
+
+      //Switch light/dark
+
+      $("#switch").on('click', function () {
+        if ($("body").hasClass("dark")) {
+          $("body").removeClass("dark");
+          $("#switch").removeClass("switched");
+        }
+        else {
+          $("body").addClass("dark");
+          $("#switch").addClass("switched");
+        }
+      });
+
+    })(jQuery);
+
+  </script>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+
+</body>
+
+</html>
